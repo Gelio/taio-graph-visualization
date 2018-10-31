@@ -2,7 +2,7 @@ import { CssBaseline, Grid, Tab, Tabs, Typography } from '@material-ui/core';
 import { TabsProps } from '@material-ui/core/Tabs';
 import React, { Component } from 'react';
 
-import { IsomorphismVisualizationPage } from './pages/isomorphism-visualization';
+import IsomorphismVisualizationPage from './pages/isomorphism-visualization';
 import SingleGraphPage from './pages/single-graph';
 
 interface AppState {

@@ -1,8 +1,13 @@
-import { Button, Grid } from '@material-ui/core';
-import React, { PureComponent, ReactNode } from 'react';
+import { Button, Grid, Typography, withStyles } from '@material-ui/core';
+import { StyleRules } from '@material-ui/core/styles';
+import { ClassNameMap } from '@material-ui/core/styles/withStyles';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import ReportProblemIcon from '@material-ui/icons/ReportProblem';
+import React, { PureComponent, ReactNode, StatelessComponent } from 'react';
 import { Data } from 'vis';
 
 import { Graph } from 'src/components/graph';
+import { PageInfo } from 'src/components/page-info';
 import {
   TextFileUpload,
   TextFileUploadProps
@@ -14,6 +19,10 @@ import {
 } from 'src/graphs/transform-isomorphism-sequences';
 import { visualizeIsomorphism } from 'src/graphs/visualize-isomorphism';
 
+interface IsomorphismVisualizationPageProps {
+  classes: ClassNameMap;
+}
+
 interface IsomorphismVisualizationPageState {
   graph1Data?: Data;
   graph2Data?: Data;
@@ -23,39 +32,67 @@ interface IsomorphismVisualizationPageState {
   visualizedGraph2Data?: Data;
 }
 
-export class IsomorphismVisualizationPage extends PureComponent<
-  {},
+const styles: StyleRules = {
+  controls: {
+    marginTop: 10,
+    marginBottom: 10
+  }
+};
+
+class IsomorphismVisualizationPage extends PureComponent<
+  IsomorphismVisualizationPageProps,
   IsomorphismVisualizationPageState
 > {
   public state: IsomorphismVisualizationPageState = {};
 
   public render() {
+    const { classes } = this.props;
+    const { graph1Data, graph2Data, isomorphismSequences } = this.state;
+
     return (
       <div>
-        <TextFileUpload
-          accept=".csv"
-          onChange={this.onGraph1FileChange}
-          label="Upload graph 1"
-        />
-        <TextFileUpload
-          accept=".csv"
-          onChange={this.onGraph2FileChange}
-          label="Upload graph 2"
-        />
-        <TextFileUpload
-          accept=".csv"
-          onChange={this.onIsomorphismSequencesFileChange}
-          label="Upload mapping"
-        />
+        <div className={classes.controls}>
+          <PageInfo>
+            <Typography variant="body1">
+              Select CSV files that describe both graphs and then provide an
+              isomorphism mapping.
+            </Typography>
 
-        <Button
-          color="primary"
-          disabled={!this.canVisualize()}
-          onClick={this.generateVisualization}
-        >
-          Visualize
-        </Button>
+            <Grid container={true} alignItems="center">
+              <TextFileUpload
+                accept=".csv"
+                onChange={this.onGraph1FileChange}
+                label="Upload graph 1"
+              />
 
+              <StatusIcon success={!!graph1Data} />
+            </Grid>
+            <Grid container={true} alignItems="center">
+              <TextFileUpload
+                accept=".csv"
+                onChange={this.onGraph2FileChange}
+                label="Upload graph 2"
+              />
+              <StatusIcon success={!!graph2Data} />
+            </Grid>
+            <Grid container={true} alignItems="center">
+              <TextFileUpload
+                accept=".csv"
+                onChange={this.onIsomorphismSequencesFileChange}
+                label="Upload mapping"
+              />
+              <StatusIcon success={!!isomorphismSequences} />
+            </Grid>
+
+            <Button
+              color="primary"
+              disabled={!this.canVisualize()}
+              onClick={this.generateVisualization}
+            >
+              Visualize
+            </Button>
+          </PageInfo>
+        </div>
         {this.renderVisualizedGraphs()}
       </div>
     );
@@ -94,6 +131,9 @@ export class IsomorphismVisualizationPage extends PureComponent<
     visualizeIsomorphism(graph1Data, graph2Data, isomorphismSequences);
 
     this.setState({
+      graph1Data: undefined,
+      graph2Data: undefined,
+      isomorphismSequences: undefined,
       visualizedGraph1Data: graph1Data,
       visualizedGraph2Data: graph2Data
     });
@@ -118,3 +158,8 @@ export class IsomorphismVisualizationPage extends PureComponent<
     );
   };
 }
+
+const StatusIcon: StatelessComponent<{ success: boolean }> = ({ success }) =>
+  success ? <CheckCircleIcon /> : <ReportProblemIcon />;
+
+export default withStyles(styles)(IsomorphismVisualizationPage);
