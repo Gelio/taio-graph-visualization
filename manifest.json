@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "TAiO visualizer",
+  "name": "TAiO graph visualizer",
   "icons": [
     {
       "src": "favicon.ico",
