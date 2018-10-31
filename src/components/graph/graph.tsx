@@ -7,17 +7,15 @@ export interface GraphProps {
   data: Data;
   options?: Options;
   classes: ClassNameMap;
+  height?: string;
 }
 
-const styles: StyleRules = {
-  graph: {
-    height: '600px'
-  }
-};
+const styles: StyleRules = {};
 
 class Graph extends PureComponent<GraphProps> {
   public static defaultProps: Partial<GraphProps> = {
-    options: {}
+    options: {},
+    height: '600px'
   };
 
   private containerRef = createRef<HTMLDivElement>();
@@ -49,7 +47,9 @@ class Graph extends PureComponent<GraphProps> {
   }
 
   public render() {
-    return <div ref={this.containerRef} className={this.props.classes.graph} />;
+    return (
+      <div ref={this.containerRef} style={{ height: this.props.height }} />
+    );
   }
 }
 

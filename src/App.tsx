@@ -2,6 +2,7 @@ import { CssBaseline, Grid, Tab, Tabs, Typography } from '@material-ui/core';
 import { TabsProps } from '@material-ui/core/Tabs';
 import React, { Component } from 'react';
 
+import InfoPage from './pages/info';
 import IsomorphismVisualizationPage from './pages/isomorphism-visualization';
 import SingleGraphPage from './pages/single-graph';
 
@@ -29,12 +30,14 @@ export class App extends Component<{}, AppState> {
 
           <Grid item={true} xs={12}>
             <Tabs value={pageIndex} onChange={this.onTabChange} centered={true}>
+              <Tab label="Information" />
               <Tab label="Graph visualization" />
               <Tab label="Isomorphism visualization" />
             </Tabs>
 
-            {pageIndex === 0 && <SingleGraphPage />}
-            {pageIndex === 1 && <IsomorphismVisualizationPage />}
+            {pageIndex === 0 && <InfoPage />}
+            {pageIndex === 1 && <SingleGraphPage />}
+            {pageIndex === 2 && <IsomorphismVisualizationPage />}
           </Grid>
         </Grid>
       </>

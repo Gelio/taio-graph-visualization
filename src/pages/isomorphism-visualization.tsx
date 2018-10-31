@@ -1,4 +1,4 @@
-import { Button, Grid, Typography, withStyles } from '@material-ui/core';
+import { Button, Grid, Paper, Typography, withStyles } from '@material-ui/core';
 import { StyleRules } from '@material-ui/core/styles';
 import { ClassNameMap } from '@material-ui/core/styles/withStyles';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -147,12 +147,16 @@ class IsomorphismVisualizationPage extends PureComponent<
     }
 
     return (
-      <Grid container={true} xs={12}>
-        <Grid item={true} xs={6}>
-          <Graph data={visualizedGraph1Data} />
+      <Grid container={true} xs={12} spacing={8}>
+        <Grid item={true} md={6} xs={12}>
+          <Paper>
+            <Graph data={visualizedGraph1Data} />
+          </Paper>
         </Grid>
-        <Grid item={true} xs={6}>
-          <Graph data={visualizedGraph2Data} />
+        <Grid item={true} md={6} xs={12}>
+          <Paper>
+            <Graph data={visualizedGraph2Data} />
+          </Paper>
         </Grid>
       </Grid>
     );
