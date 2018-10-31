@@ -12,6 +12,8 @@ export function createGraphFromCSV(data: string): Data {
   };
 }
 
+const defaultColor = '#45b7b7';
+
 function createNodes(nodesCount: number): DataSet<Node> {
   const nodes = new DataSet<Node>();
 
@@ -19,7 +21,7 @@ function createNodes(nodesCount: number): DataSet<Node> {
     nodes.add({
       id: i,
       label: i.toString(),
-      color: '#45b7b7'
+      color: defaultColor
     });
   }
 
@@ -34,9 +36,12 @@ function createEdges(adjacencyMatrix: Matrix): DataSet<Edge> {
     for (let v2 = v1 + 1; v2 < nodesCount; v2++) {
       if (adjacencyMatrix[v1][v2]) {
         edges.add({
+          id: `${v1}-${v2}`,
           from: v1,
           to: v2,
-          color: '#45b7b7'
+          color: {
+            color: defaultColor
+          }
         });
       }
     }

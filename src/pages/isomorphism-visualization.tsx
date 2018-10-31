@@ -53,9 +53,18 @@ class IsomorphismVisualizationPage extends PureComponent<
       <div>
         <div className={classes.controls}>
           <PageInfo>
-            <Typography variant="body1">
+            <Typography variant="body1" gutterBottom={true}>
               Select CSV files that describe both graphs and then provide an
               isomorphism mapping.
+            </Typography>
+
+            <Typography variant="body1" gutterBottom={true}>
+              Isomorphic subgraphs will be colored in a different way.
+            </Typography>
+
+            <Typography variant="body1" gutterBottom={true}>
+              The numbers in parentheses correspond to that vertex's index in
+              the isomorphism mapping.
             </Typography>
 
             <Grid container={true} alignItems="center">
