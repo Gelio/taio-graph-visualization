@@ -32,11 +32,20 @@ export class IsomorphismVisualizationPage extends PureComponent<
   public render() {
     return (
       <div>
-        <TextFileUpload accept=".csv" onChange={this.onGraph1FileChange} />
-        <TextFileUpload accept=".csv" onChange={this.onGraph2FileChange} />
+        <TextFileUpload
+          accept=".csv"
+          onChange={this.onGraph1FileChange}
+          label="Upload graph 1"
+        />
+        <TextFileUpload
+          accept=".csv"
+          onChange={this.onGraph2FileChange}
+          label="Upload graph 2"
+        />
         <TextFileUpload
           accept=".csv"
           onChange={this.onIsomorphismSequencesFileChange}
+          label="Upload mapping"
         />
 
         <Button

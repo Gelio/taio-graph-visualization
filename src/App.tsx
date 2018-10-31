@@ -1,10 +1,9 @@
-import { Tab, Tabs } from '@material-ui/core';
+import { CssBaseline, Grid, Tab, Tabs, Typography } from '@material-ui/core';
 import { TabsProps } from '@material-ui/core/Tabs';
 import React, { Component } from 'react';
-import './App.css';
 
 import { IsomorphismVisualizationPage } from './pages/isomorphism-visualization';
-import { SingleGraphPage } from './pages/single-graph';
+import SingleGraphPage from './pages/single-graph';
 
 interface AppState {
   pageIndex: number;
@@ -19,17 +18,26 @@ export class App extends Component<{}, AppState> {
     const { pageIndex } = this.state;
 
     return (
-      <div className="App">
-        <h1>TAiO graph visualizer</h1>
+      <>
+        <CssBaseline />
+        <Grid container={true}>
+          <Grid item={true} xs={12}>
+            <Typography variant="h1" gutterBottom={true} align="center">
+              TAiO graph visualizer
+            </Typography>
+          </Grid>
 
-        <Tabs value={pageIndex} onChange={this.onTabChange}>
-          <Tab label="Graph visualization" />
-          <Tab label="Isomorphism visualization" />
-        </Tabs>
+          <Grid item={true} xs={12}>
+            <Tabs value={pageIndex} onChange={this.onTabChange} centered={true}>
+              <Tab label="Graph visualization" />
+              <Tab label="Isomorphism visualization" />
+            </Tabs>
 
-        {pageIndex === 0 && <SingleGraphPage />}
-        {pageIndex === 1 && <IsomorphismVisualizationPage />}
-      </div>
+            {pageIndex === 0 && <SingleGraphPage />}
+            {pageIndex === 1 && <IsomorphismVisualizationPage />}
+          </Grid>
+        </Grid>
+      </>
     );
   }
 

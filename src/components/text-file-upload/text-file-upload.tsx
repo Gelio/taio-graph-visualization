@@ -1,3 +1,8 @@
+import { Button } from '@material-ui/core';
+import withStyles, {
+  ClassNameMap,
+  StyleRules
+} from '@material-ui/core/styles/withStyles';
 import React, { ChangeEventHandler, PureComponent } from 'react';
 
 function readFileToString(file: File) {
@@ -11,13 +16,54 @@ function readFileToString(file: File) {
 
 export interface TextFileUploadProps {
   accept?: string;
+  label: string;
+  classes: ClassNameMap;
   onChange?(result: string): any;
 }
 
-export class TextFileUpload extends PureComponent<TextFileUploadProps> {
+interface TextFileUploadState {
+  inputId: string;
+}
+
+const styles: StyleRules = {
+  input: {
+    display: 'none'
+  }
+};
+
+let lastId = 0;
+
+function generateUniqueId() {
+  return `file-input-${lastId++}`;
+}
+
+class TextFileUpload extends PureComponent<
+  TextFileUploadProps,
+  TextFileUploadState
+> {
+  public state: TextFileUploadState = {
+    inputId: generateUniqueId()
+  };
+
   public render() {
+    const { classes, accept, label } = this.props;
+    const { inputId } = this.state;
+
     return (
-      <input type="file" accept={this.props.accept} onChange={this.onChange} />
+      <>
+        <input
+          type="file"
+          id={inputId}
+          className={classes.input}
+          accept={accept}
+          onChange={this.onChange}
+        />
+        <label htmlFor={inputId}>
+          <Button component="span" variant="contained">
+            {label}
+          </Button>
+        </label>
+      </>
     );
   }
 
@@ -38,3 +84,7 @@ export class TextFileUpload extends PureComponent<TextFileUploadProps> {
     onChange(result);
   };
 }
+
+const EnhancedTextFileUpload = withStyles(styles)(TextFileUpload);
+
+export { EnhancedTextFileUpload as TextFileUpload };

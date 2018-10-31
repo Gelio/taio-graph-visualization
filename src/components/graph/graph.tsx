@@ -1,14 +1,21 @@
+import { StyleRules, withStyles } from '@material-ui/core/styles';
+import { ClassNameMap } from '@material-ui/core/styles/withStyles';
 import React, { createRef, PureComponent } from 'react';
 import { Data, Network, Options } from 'vis';
-
-import './graph.css';
 
 export interface GraphProps {
   data: Data;
   options?: Options;
+  classes: ClassNameMap;
 }
 
-export class Graph extends PureComponent<GraphProps> {
+const styles: StyleRules = {
+  graph: {
+    height: '600px'
+  }
+};
+
+class Graph extends PureComponent<GraphProps> {
   public static defaultProps: Partial<GraphProps> = {
     options: {}
   };
@@ -42,6 +49,10 @@ export class Graph extends PureComponent<GraphProps> {
   }
 
   public render() {
-    return <div ref={this.containerRef} className="graph" />;
+    return <div ref={this.containerRef} className={this.props.classes.graph} />;
   }
 }
+
+const EnhancedGraph = withStyles(styles)(Graph);
+
+export { EnhancedGraph as Graph };
