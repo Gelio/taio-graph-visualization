@@ -2,6 +2,7 @@
   "name": "taio-graph-visualization",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://gelio.github.io/taio-graph-visualization",
   "dependencies": {
     "@material-ui/core": "^3.3.2",
     "@material-ui/icons": "^3.0.1",
