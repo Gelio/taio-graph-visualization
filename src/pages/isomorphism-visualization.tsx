@@ -156,7 +156,7 @@ class IsomorphismVisualizationPage extends PureComponent<
     }
 
     return (
-      <Grid container={true} xs={12} spacing={8}>
+      <Grid container={true} spacing={8}>
         <Grid item={true} md={6} xs={12}>
           <Paper>
             <Graph data={visualizedGraph1Data} />

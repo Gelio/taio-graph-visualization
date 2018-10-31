@@ -80,8 +80,9 @@ class TextFileUpload extends PureComponent<
     }
 
     const file = files[0];
-    const result = await readFileToString(file);
-    onChange(result);
+    const resultPromise = readFileToString(file);
+    event.target.value = '';
+    onChange(await resultPromise);
   };
 }
 
