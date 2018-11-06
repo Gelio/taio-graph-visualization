@@ -148,6 +148,17 @@ const InfoPage: StatelessComponent<InfoPageProps> = ({ classes }) => (
       </Typography>
 
       <Typography variant="h5" gutterBottom={true}>
+        Graph examples
+      </Typography>
+      <Typography variant="body1" gutterBottom={true}>
+        One of the tabs contains a form that allows users to upload their own
+        interesting graph examples, optionally with their results.
+      </Typography>
+      <Typography variant="body1" gutterBottom={true}>
+        The uploaded graphs are listed in a table.
+      </Typography>
+
+      <Typography variant="h5" gutterBottom={true}>
         Permission of use
       </Typography>
       <Typography variant="body1" gutterBottom={true}>
