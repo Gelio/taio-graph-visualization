@@ -1,13 +1,13 @@
 import { Button, Grid, Paper, Typography, withStyles } from '@material-ui/core';
 import { StyleRules } from '@material-ui/core/styles';
 import { ClassNameMap } from '@material-ui/core/styles/withStyles';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ReportProblemIcon from '@material-ui/icons/ReportProblem';
-import React, { PureComponent, ReactNode, StatelessComponent } from 'react';
+
+import React, { PureComponent, ReactNode } from 'react';
 import { Data } from 'vis';
 
 import { Graph } from 'src/components/graph';
 import { PageInfo } from 'src/components/page-info';
+import { StatusIcon } from 'src/components/status-icon';
 import {
   TextFileUpload,
   TextFileUploadProps
@@ -171,8 +171,5 @@ class IsomorphismVisualizationPage extends PureComponent<
     );
   };
 }
-
-const StatusIcon: StatelessComponent<{ success: boolean }> = ({ success }) =>
-  success ? <CheckCircleIcon /> : <ReportProblemIcon />;
 
 export default withStyles(styles)(IsomorphismVisualizationPage);

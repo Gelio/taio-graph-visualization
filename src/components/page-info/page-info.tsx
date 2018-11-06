@@ -17,7 +17,7 @@ const PageInfo: StatelessComponent<PageInfoProps> = ({ children, classes }) => (
   <Grid container={true}>
     <Grid item={true} xs={12}>
       <Grid container={true} justify="center" spacing={8}>
-        <Grid item={true} xs={12} md={6}>
+        <Grid item={true} xs={12} lg={10} xl={6}>
           <Paper className={classes.paper}>{children}</Paper>
         </Grid>
       </Grid>
