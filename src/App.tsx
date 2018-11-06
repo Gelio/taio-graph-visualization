@@ -29,11 +29,7 @@ export class App extends Component<{}, AppState> {
           </Grid>
 
           <Grid item={true} xs={12}>
-            <Tabs value={pageIndex} onChange={this.onTabChange} centered={true}>
-              <Tab label="Information" />
-              <Tab label="Graph visualization" />
-              <Tab label="Isomorphism visualization" />
-            </Tabs>
+            {this.renderTabs()}
 
             {pageIndex === 0 && <InfoPage />}
             {pageIndex === 1 && <SingleGraphPage />}
@@ -43,6 +39,25 @@ export class App extends Component<{}, AppState> {
       </>
     );
   }
+
+  private renderTabs = () => {
+    return (
+      <Grid container={true} justify="center">
+        <Grid item={true}>
+          <Tabs
+            value={this.state.pageIndex}
+            onChange={this.onTabChange}
+            scrollable={true}
+            scrollButtons="off"
+          >
+            <Tab label="Information" />
+            <Tab label="Graph visualization" />
+            <Tab label="Isomorphism visualization" />
+          </Tabs>
+        </Grid>
+      </Grid>
+    );
+  };
 
   private onTabChange: TabsProps['onChange'] = (_, pageIndex: number) => {
     this.setState({
