@@ -1,9 +1,17 @@
-import { Button, Grid, Paper, Typography, withStyles } from '@material-ui/core';
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Paper,
+  Typography,
+  withStyles
+} from '@material-ui/core';
+import { CheckboxProps } from '@material-ui/core/Checkbox';
 import { StyleRules } from '@material-ui/core/styles';
 import { ClassNameMap } from '@material-ui/core/styles/withStyles';
-
 import React, { PureComponent, ReactNode } from 'react';
-import { Data } from 'vis';
+import { Data, Options } from 'vis';
 
 import { Graph } from 'src/components/graph';
 import { PageInfo } from 'src/components/page-info';
@@ -30,6 +38,8 @@ interface IsomorphismVisualizationPageState {
 
   visualizedGraph1Data?: Data;
   visualizedGraph2Data?: Data;
+
+  options: Options;
 }
 
 const styles: StyleRules = {
@@ -43,11 +53,18 @@ class IsomorphismVisualizationPage extends PureComponent<
   IsomorphismVisualizationPageProps,
   IsomorphismVisualizationPageState
 > {
-  public state: IsomorphismVisualizationPageState = {};
+  public state: IsomorphismVisualizationPageState = {
+    options: { physics: true }
+  };
 
   public render() {
     const { classes } = this.props;
-    const { graph1Data, graph2Data, isomorphismSequences } = this.state;
+    const {
+      graph1Data,
+      graph2Data,
+      isomorphismSequences,
+      options
+    } = this.state;
 
     return (
       <div>
@@ -100,6 +117,20 @@ class IsomorphismVisualizationPage extends PureComponent<
             >
               Visualize
             </Button>
+
+            <hr />
+
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={options.physics}
+                  onChange={this.onPhysicsCheckboxChange}
+                  color="primary"
+                  value="physics"
+                />
+              }
+              label="Enable physics"
+            />
           </PageInfo>
         </div>
         {this.renderVisualizedGraphs()}
@@ -149,7 +180,7 @@ class IsomorphismVisualizationPage extends PureComponent<
   };
 
   private renderVisualizedGraphs = (): ReactNode => {
-    const { visualizedGraph1Data, visualizedGraph2Data } = this.state;
+    const { visualizedGraph1Data, visualizedGraph2Data, options } = this.state;
 
     if (!visualizedGraph1Data || !visualizedGraph2Data) {
       return null;
@@ -159,16 +190,27 @@ class IsomorphismVisualizationPage extends PureComponent<
       <Grid container={true} spacing={8}>
         <Grid item={true} md={6} xs={12}>
           <Paper>
-            <Graph data={visualizedGraph1Data} />
+            <Graph data={visualizedGraph1Data} options={options} />
           </Paper>
         </Grid>
         <Grid item={true} md={6} xs={12}>
           <Paper>
-            <Graph data={visualizedGraph2Data} />
+            <Graph data={visualizedGraph2Data} options={options} />
           </Paper>
         </Grid>
       </Grid>
     );
+  };
+
+  private onPhysicsCheckboxChange: CheckboxProps['onChange'] = event => {
+    const { checked } = event.target;
+
+    this.setState(state => ({
+      options: {
+        ...state.options,
+        physics: checked
+      }
+    }));
   };
 }
 

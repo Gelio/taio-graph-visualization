@@ -1,8 +1,15 @@
-import { Grid, Paper, Typography } from '@material-ui/core';
+import {
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Paper,
+  Typography
+} from '@material-ui/core';
+import { CheckboxProps } from '@material-ui/core/Checkbox';
 import { StyleRules, withStyles } from '@material-ui/core/styles';
 import { ClassNameMap } from '@material-ui/core/styles/withStyles';
 import React, { PureComponent } from 'react';
-import { Data } from 'vis';
+import { Data, Options } from 'vis';
 
 import { Graph } from 'src/components/graph';
 import {
@@ -19,6 +26,7 @@ interface SingleGraphPageProps {
 
 interface SingleGraphPageState {
   graphData?: Data;
+  options: Options;
 }
 
 const styles: StyleRules = {
@@ -32,10 +40,13 @@ class SingleGraphPage extends PureComponent<
   SingleGraphPageProps,
   SingleGraphPageState
 > {
-  public state: SingleGraphPageState = {};
+  public state: SingleGraphPageState = {
+    options: { physics: true }
+  };
 
   public render() {
     const { classes } = this.props;
+    const { options } = this.state;
 
     return (
       <>
@@ -48,6 +59,20 @@ class SingleGraphPage extends PureComponent<
               accept=".csv"
               onChange={this.onFileUpload}
               label="Upload CSV"
+            />
+
+            <hr />
+
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={options.physics}
+                  onChange={this.onPhysicsCheckboxChange}
+                  color="primary"
+                  value="physics"
+                />
+              }
+              label="Enable physics"
             />
           </PageInfo>
         </div>
@@ -63,7 +88,7 @@ class SingleGraphPage extends PureComponent<
   };
 
   private renderGraph = () => {
-    const { graphData } = this.state;
+    const { graphData, options } = this.state;
 
     if (!graphData) {
       return;
@@ -73,11 +98,22 @@ class SingleGraphPage extends PureComponent<
       <Grid container={true} justify="center">
         <Grid item={true} xs={11}>
           <Paper>
-            <Graph data={graphData} options={{}} />
+            <Graph data={graphData} options={options} />
           </Paper>
         </Grid>
       </Grid>
     );
+  };
+
+  private onPhysicsCheckboxChange: CheckboxProps['onChange'] = event => {
+    const { checked } = event.target;
+
+    this.setState(state => ({
+      options: {
+        ...state.options,
+        physics: checked
+      }
+    }));
   };
 }
 
